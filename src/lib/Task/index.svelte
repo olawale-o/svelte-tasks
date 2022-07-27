@@ -1,10 +1,15 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   export let task;
   let taskCard;
   let dragItem;
+  const dispatch = createEventDispatcher();
   function onDragStart() {
     dragItem = taskCard;
-    console.log(dragItem);
+  }
+
+  function onCheckTask() {
+    dispatch('checkedTask', { task });
   }
 </script>
 
@@ -19,6 +24,7 @@
       <input
         type="checkbox"
         bind:checked={task.completed}
+        on:change={onCheckTask}
       >
       <span class="checkmark"></span>
     </label>
