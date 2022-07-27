@@ -10,7 +10,7 @@
   <div class="progress"></div>
   <ul class="todo-tasks" id="todo-tasks">
     {#each task.tasks as task}
-      <TaskCard {task} />
+      <TaskCard on:checkedTask {task} />
     {/each}
   </ul>
 </div>
