@@ -14,9 +14,10 @@
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>
     <span class="task-title">{task.title}</span>
-    <span class="task-title">{task.progressLevel}</span>
   </button>
-  <div class="progress"></div>
+  <div class="progress">
+    <div class="progress-level" style="height: 100%; width: {task.progressLevel+'%'};"></div>
+  </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
     {#each task.tasks as task}
       <TaskCard on:checkedTask {task} />
@@ -38,8 +39,12 @@
 
   .progress {
     widows: 100%;
-    height: 1px;
+    height: 2px;
+  }
+
+  .progress-level {
     background: green;
+    transition: all 300ms ease;
   }
 
   .task-title {
