@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import AddTask from './New.svelte';
   import TaskCard from './index.svelte';
   export let task;
   export let id;
@@ -10,6 +11,11 @@
     open = !open;
     dispatch('toggleTask',  { id });
   }
+
+  function addTask(e) {
+    console.log(e.detail.description);
+    console.log(e.detail.parentId);
+  }
 </script>
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>
@@ -19,6 +25,7 @@
     <div class="progress-level" style="height: 100%; width: {task.progressLevel+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
+    <AddTask on:addTask={addTask} parentId={task.id} />
     {#each task.tasks as task}
       <TaskCard on:checkedTask {task} />
     {/each}
