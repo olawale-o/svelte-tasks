@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import AddTask from './New.svelte';
   import TaskCard from './index.svelte';
   export let task;
@@ -15,6 +15,7 @@
   function addTask(e) {
     dispatch('addTask', { description: e.detail.description, id: e.detail.parentId });
   }
+
 </script>
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>

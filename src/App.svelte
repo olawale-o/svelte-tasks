@@ -1,48 +1,7 @@
 <script>
-  import { setContext } from 'svelte';
+  import { taskStore } from './lib/store/taskStore';
   import TaskList from './lib/Task/List.svelte';
   let currentActiveIndex = 0;
-  let tasks = [
-    {
-      id: 1,
-      title: "Deployment",
-      progressLevel: 50,
-      tasks: [
-        {
-          id: 1,
-          description: "Deployment Task One",
-          completed: true,
-          parentId: 1,
-        },
-        {
-          id: 2,
-          description: "Deployment Task Two",
-          completed: false,
-          parentId: 1,
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: "Design",
-      progressLevel: 50,
-      tasks: [
-        {
-          id: 1,
-          description: "Design Task One",
-          completed: false,
-          parentId: 2,
-        },
-        {
-          id: 2,
-          description: "Design Task Two",
-          completed: true,
-          parentId: 2,
-        },
-      ],
-    }
-  ];
-
   $: {
     console.log(tasks);
   }
@@ -89,12 +48,7 @@
       currentActiveIndex = e.detail.id;
     }
   }
-  setContext('nameContext', {
-    name: 'Svelte',
-    updateName(){
-      this.name = 'Angular'
-    }
-  });
+  $: tasks = $taskStore.tasks;
 </script>
 
 <main>
