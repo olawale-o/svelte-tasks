@@ -1,16 +1,12 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
+  import { taskStore } from '../store/taskStore';
   let text;
   export let parentId;
   function addTask(e) {
     if (e.key === 'Enter' || e.type === 'click') {
-      dispatch('addTask', {
-        parentId,
-        description: text,
-      });
+      taskStore.addTask({ description: text, id: parentId });
+      text = '';
     }
-    text = '';
   }
 </script>
 <div class="input-field">

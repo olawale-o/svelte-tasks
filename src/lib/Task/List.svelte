@@ -12,10 +12,6 @@
     dispatch('toggleTask',  { id });
   }
 
-  function addTask(e) {
-    dispatch('addTask', { description: e.detail.description, id: e.detail.parentId });
-  }
-
 </script>
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>
@@ -25,7 +21,7 @@
     <div class="progress-level" style="height: 100%; width: {task.progressLevel+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
-    <AddTask on:addTask={addTask} parentId={task.id} />
+    <AddTask parentId={task.id} />
     {#each task.tasks as task, id}
       <TaskCard
         on:checkedTask

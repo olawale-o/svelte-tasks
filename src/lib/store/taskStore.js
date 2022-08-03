@@ -41,4 +41,37 @@ let tasks = [
   }
 ];
 
-export const count = writable(tasks);
+const initialState = {
+  tasks,
+};
+
+function createTaskStore(state = initialState) {
+  const { subscribe, update, set } = writable(state);
+
+  return {
+    subscribe,
+    addTask: (task) => update((state) => {
+        const oldTasks = [...state.tasks];
+
+        const { description, id } = task;
+        const parentTaskIndex = state.tasks.findIndex((task) => task.id === id);
+    
+        const parentTask = oldTasks[parentTaskIndex];
+    
+        const newTask = {
+          id: Math.floor(Math.random() * 100),
+          description,
+          completed: false,
+          parentId: id,
+        };
+    
+        parentTask.tasks.push(newTask);
+        parentTask.progressLevel = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
+        oldTasks[parentTaskIndex] = parentTask;
+        state.tasks = oldTasks;
+        return state;
+    }),
+  }
+}
+
+export const taskStore = createTaskStore();
