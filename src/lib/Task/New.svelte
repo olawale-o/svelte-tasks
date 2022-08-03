@@ -10,6 +10,7 @@
         description: text,
       });
     }
+    text = '';
   }
 </script>
 <div class="input-field">
