@@ -24,7 +24,6 @@
     <AddTask parentId={task.id} />
     {#each task.tasks as task, id}
       <TaskCard
-        on:checkedTask
         {task}
         {id}
       />

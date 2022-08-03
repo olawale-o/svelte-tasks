@@ -51,25 +51,33 @@ function createTaskStore(state = initialState) {
   return {
     subscribe,
     addTask: (task) => update((state) => {
-        const oldTasks = [...state.tasks];
+      const oldTasks = [...state.tasks];
 
-        const { description, id } = task;
-        const parentTaskIndex = state.tasks.findIndex((task) => task.id === id);
+      const { description, id } = task;
+      const parentTaskIndex = state.tasks.findIndex((task) => task.id === id);
     
-        const parentTask = oldTasks[parentTaskIndex];
+      const parentTask = oldTasks[parentTaskIndex];
     
-        const newTask = {
-          id: Math.floor(Math.random() * 100),
-          description,
-          completed: false,
-          parentId: id,
-        };
+      const newTask = {
+        id: Math.floor(Math.random() * 100),
+        description,
+        completed: false,
+        parentId: id,
+      };
     
-        parentTask.tasks.push(newTask);
-        parentTask.progressLevel = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
-        oldTasks[parentTaskIndex] = parentTask;
-        state.tasks = oldTasks;
-        return state;
+      parentTask.tasks.push(newTask);
+      parentTask.progressLevel = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
+      oldTasks[parentTaskIndex] = parentTask;
+      state.tasks = oldTasks;
+      return state;
+    }),
+    toggleTask: (task) => update((state) => {
+      const oldTasks = [...state.tasks];
+      const parentTask = oldTasks.find((item) => item.id === task.parentId);
+      const completeTasks = parentTask.tasks.filter((task) => task.completed === true).length;
+      parentTask.progressLevel = (completeTasks / parentTask.tasks.length) * 100;
+      tasks = oldTasks;
+      return state;
     }),
   }
 }

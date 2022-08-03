@@ -1,22 +1,23 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { taskStore } from '../store/taskStore';
   export let task;
+  export let id;
   let taskCard;
   let dragItem;
-  const dispatch = createEventDispatcher();
-  function onDragStart() {
-    dragItem = taskCard;
-  }
+  let dragEnterIntem;
 
-  function onCheckTask() {
-    dispatch('checkedTask', { task });
+  function onDragEnd() {
+    console.log(dragEnterIntem);
   }
 </script>
 
 <li
   class="todo-list"
   bind:this={taskCard}
-  on:dragstart={onDragStart}
+  on:dragstart={() => dragItem = id}
+  on:dragenter={() => dragEnterIntem = id}
+  on:dragover|preventDefault
+  on:dragend={onDragEnd}
   draggable={true}
 >
   <div class="field todo-list__task">
@@ -24,7 +25,7 @@
       <input
         type="checkbox"
         bind:checked={task.completed}
-        on:change={onCheckTask}
+        on:change={() => taskStore.toggleTask(task)}
       >
       <span class="checkmark"></span>
     </label>
