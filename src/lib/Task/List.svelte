@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import AddTask from './New.svelte';
   import TaskCard from './index.svelte';
   export let task;
@@ -13,8 +13,7 @@
   }
 
   function addTask(e) {
-    console.log(e.detail.description);
-    console.log(e.detail.parentId);
+    dispatch('addTask', { description: e.detail.description, id: e.detail.parentId });
   }
 </script>
 <div class="task-container">
@@ -26,8 +25,12 @@
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
     <AddTask on:addTask={addTask} parentId={task.id} />
-    {#each task.tasks as task}
-      <TaskCard on:checkedTask {task} />
+    {#each task.tasks as task, id}
+      <TaskCard
+        on:checkedTask
+        {task}
+        {id}
+      />
     {/each}
   </ul>
 </div>
