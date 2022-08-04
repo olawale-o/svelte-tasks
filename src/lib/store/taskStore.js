@@ -79,6 +79,10 @@ function createTaskStore(state = initialState) {
       tasks = oldTasks;
       return state;
     }),
+    updateTasks: (tasks) => update((state) => {
+      state.tasks = tasks;
+      return state;
+    }),
   }
 }
 
