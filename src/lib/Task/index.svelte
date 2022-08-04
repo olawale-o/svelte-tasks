@@ -25,7 +25,12 @@
       >
       <span class="checkmark"></span>
     </label>
-    <span class="todo-list__text">{task.description}</span>
+    <span
+      class="todo-list__text"
+      class:strike={task.completed}
+    >
+      {task.description}
+    </span>
     <i class="bx bx-trash-alt bin hide"></i>
     <i class="bx bx-dots-vertical-rounded move"></i>
   </div>
@@ -109,5 +114,9 @@
     flex: 5;
     display: flex;
     justify-content: space-between;
+  }
+
+  .todo-list__text.strike {
+    text-decoration: line-through;
   }
 </style>
