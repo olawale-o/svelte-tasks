@@ -1,13 +1,18 @@
 <script>
   import { taskStore } from '../store/taskStore';
+  import { newTask } from './utils';
   let text;
   export let placeholder;
   export let parentId;
   function addTask(e) {
-    if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
-      taskStore.addTask({ description: text, id: parentId });
+    const isAdded = newTask(e, text, { description: text, id: parentId }, taskStore.addTask);
+    if (isAdded) {
       text = '';
     }
+    // if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
+    //   taskStore.addTask({ description: text, id: parentId });
+    //   text = '';
+    // }
   }
 </script>
 <div class="input-field">
