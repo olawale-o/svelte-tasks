@@ -1,9 +1,10 @@
 <script>
   import { taskStore } from '../store/taskStore';
   let text;
+  export let placeholder;
   export let parentId;
   function addTask(e) {
-    if (e.key === 'Enter' || e.type === 'click') {
+    if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
       taskStore.addTask({ description: text, id: parentId });
       text = '';
     }
@@ -14,7 +15,7 @@
     type="text"
     class="input"
     on:keyup={addTask}
-    placeholder="Add to your list"
+    placeholder={`Add task to ${placeholder}`}
     bind:value={text}
   >
   <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask}></i></span>

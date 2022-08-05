@@ -50,7 +50,7 @@
     <div class="progress-level" style="height: 100%; width: {task.progressLevel+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
-    <AddTask parentId={task.id} />
+    <AddTask placeholder={task.title} parentId={task.id} />
     {#each task.tasks as task, key}
       <TaskCard
         {task}

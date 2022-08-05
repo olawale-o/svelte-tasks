@@ -52,7 +52,6 @@ function createTaskStore(state = initialState) {
     subscribe,
     addParentTask: (task) => update((state) => {
       state.tasks.push(task);
-      console.log(state);
       return state;
     }),
     addTask: (task) => update((state) => {

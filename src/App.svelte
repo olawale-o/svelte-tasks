@@ -16,7 +16,7 @@
     }
   }
   function addTask(e) {
-    if (e.key === 'Enter' || e.type === 'click') {
+    if ((e.key === 'Enter' || e.type === 'click') && task?.trim()) {
       taskStore.addParentTask({ title: task, id: tasks.length + 1, progressLevel: 0, tasks: [] });
       task = '';
     }
