@@ -23,6 +23,7 @@
     }
   }
   $: tasks = $taskStore.tasks;
+  console.log(taskStore.tasks)
 </script>
 
 <main>
