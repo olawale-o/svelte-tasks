@@ -16,14 +16,23 @@
       currentActiveIndex = e.detail.id;
     }
   }
-  function addTask(e) {
+  async function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && task?.trim()) {
-      newTask(e, { title: capitalize(task), id: tasks.length + 1, progressLevel: 0, tasks: []}, taskStore.addParentTask);
+      // newTask(e, {
+      //   title: capitalize(task),
+      //   id: tasks.length + 1,
+      //   progressLevel: 0,
+      //   tasks: []
+      // }, taskStore.addParentTask);
+      await newTask(e, {
+        title: capitalize(task),
+        progress_level: 0,
+      }, taskStore.addParentTask);
       task = '';
     }
   }
 
-  $: tasks = $taskStore.tasks;
+  $: tasks = $taskStore;
 </script>
 
 <main>
@@ -39,14 +48,19 @@
         >
         <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask} on:keypress={addTask}></i></span>
       </div>
-      {#each tasks as task, id}
-        <TaskList
-          todo={task}
-          active={currentActiveIndex === id}
-          {id}
-          on:toggleTask={toggleTask}
-        />
-      {/each}
+      {#if tasks?.tasks}
+        {@const toods = tasks.tasks}
+        {#each toods as task, id}
+          <TaskList
+            todo={task}
+            active={currentActiveIndex === id}
+            {id}
+            on:toggleTask={toggleTask}
+          />
+        {/each}
+        {:else}
+          <p>No todos for now</p>
+      {/if}
     </div>
   </div>
 </main>

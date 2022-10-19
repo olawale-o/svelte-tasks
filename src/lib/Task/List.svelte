@@ -50,19 +50,23 @@
     <span class="task-title">{todo.title}</span>
   </button>
   <div class="progress">
-    <div class="progress-level" style="height: 100%; width: {todo.progressLevel+'%'};"></div>
+    <div class="progress-level" style="height: 100%; width: {todo.progress_level+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
     <AddTask placeholder={todo.title} parentId={todo.id} />
-    {#each todo.tasks as task, key}
-      <TaskCard
-        {task}
-        id={key}
-        on:start={start}
-        on:enter={enter}
-        on:end={end}
-      />
-    {/each}
+    {#if todo?.task}
+      {#each todo.tasks as task, key}
+        <TaskCard
+          {task}
+          id={key}
+          on:start={start}
+          on:enter={enter}
+          on:end={end}
+        />
+      {/each}
+    {:else}
+      <p>No todos under this task</p>
+    {/if}
   </ul>
 </div>
 

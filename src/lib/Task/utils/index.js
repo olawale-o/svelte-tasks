@@ -1,10 +1,11 @@
+
 /**
  * @param {{ key: string; type: string; }} e
  * @param {any} task
  * @param {(arg0: any) => void} cb
  */
-function newTask(e, task, cb) {
-  cb(task);
+async function newTask(e, task, cb) {
+  await cb(task);
   return true;
 }
 
