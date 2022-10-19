@@ -1,32 +1,34 @@
 import { writable } from 'svelte/store';
-const localStoreTasks = JSON.parse(localStorage.getItem('tasks'));
+import { addParenTaskToDB } from '@/lib/db/db';
 
+const localStoreTasks = JSON.parse(localStorage.getItem('tasks'));
+const tasks = [
+  {
+    id: 1,
+    title: "Language",
+    progress_level: 0,
+    tasks: [
+      {
+        id: 1,
+        description: "Javascript",
+        completed: false,
+      },
+      {
+        id: 2,
+        description: "PHP",
+        completed: false,
+      },
+      {
+        id: 3,
+        description: "Ruby",
+        completed: false,
+      },
+    ],
+  },
+];
 
 const initialState = {
-  tasks: localStoreTasks?.tasks || [
-    {
-      id: 1,
-      title: "Language",
-      progressLevel: 0,
-      tasks: [
-        {
-          id: 1,
-          description: "Javascript",
-          completed: false,
-        },
-        {
-          id: 2,
-          description: "PHP",
-          completed: false,
-        },
-        {
-          id: 3,
-          description: "Ruby",
-          completed: false,
-        },
-      ],
-    },
-  ],
+  tasks: localStoreTasks?.tasks || [],
 };
 
 function createTaskStore(state = initialState) {
@@ -36,6 +38,7 @@ function createTaskStore(state = initialState) {
     subscribe,
     addParentTask: (task) => update((state) => {
       state.tasks.push(task);
+      addParenTaskToDB(task);
       subscribe((state) => localStorage.setItem('tasks', JSON.stringify(state)));
       return state;
     }),
@@ -55,7 +58,7 @@ function createTaskStore(state = initialState) {
       };
     
       parentTask.tasks.push(newTask);
-      parentTask.progressLevel = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
+      parentTask.progress_level = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
       oldTasks[parentTaskIndex] = parentTask;
       state.tasks = oldTasks;
       subscribe((state) => localStorage.setItem('tasks', JSON.stringify(state)));
@@ -65,7 +68,7 @@ function createTaskStore(state = initialState) {
       const oldTasks = [...state.tasks];
       const parentTask = oldTasks.find((item) => item.id === task.parentId);
       const completeTasks = parentTask.tasks.filter((task) => task.completed === true).length;
-      parentTask.progressLevel = (completeTasks / parentTask.tasks.length) * 100;
+      parentTask.progress_level = (completeTasks / parentTask.tasks.length) * 100;
       state.tasks = oldTasks
       subscribe((state) => localStorage.setItem('tasks', JSON.stringify(state)));
       return state;
