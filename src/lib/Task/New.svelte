@@ -5,14 +5,10 @@
   export let placeholder;
   export let parentId;
   function addTask(e) {
-    const isAdded = newTask(e, text, { description: text, id: parentId }, taskStore.addTask);
-    if (isAdded) {
-      text = '';
+    if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
+      const isAdded = newTask(e, text, { description: text, id: parentId }, taskStore.addTask);
+      if (isAdded) text = '';
     }
-    // if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
-    //   taskStore.addTask({ description: text, id: parentId });
-    //   text = '';
-    // }
   }
 </script>
 <div class="input-field">
@@ -23,5 +19,5 @@
     placeholder={`Add task to ${placeholder}`}
     bind:value={text}
   >
-  <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask}></i></span>
+  <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask} on:keypress={addTask}></i></span>
 </div>
