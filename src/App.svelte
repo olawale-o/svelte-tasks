@@ -1,7 +1,7 @@
 <script>
-  import { taskStore } from './lib/store/taskStore';
-  import { newTask } from './lib/Task/utils';
-  import TaskList from './lib/Task/List.svelte';
+  import { taskStore } from '@/lib/store/taskStore';
+  import { newTask } from '@/lib/Task/utils';
+  import TaskList from '@/lib/Task/List.svelte';
   let currentActiveIndex = 0;
   $: {  }
   let task = '';
@@ -22,8 +22,8 @@
       task = '';
     }
   }
+
   $: tasks = $taskStore.tasks;
-  console.log(taskStore.tasks)
 </script>
 
 <main>
@@ -41,7 +41,7 @@
       </div>
       {#each tasks as task, id}
         <TaskList
-          {task}
+          todo={task}
           active={currentActiveIndex === id}
           {id}
           on:toggleTask={toggleTask}

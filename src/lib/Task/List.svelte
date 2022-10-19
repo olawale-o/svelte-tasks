@@ -3,12 +3,13 @@
   import { taskStore } from '../store/taskStore';
   import AddTask from './New.svelte';
   import TaskCard from './index.svelte';
-  export let task;
+  export let todo;
   export let id;
   export let active;
   let open = false;
   let dragItem = null;
   let dragEnterItem = null;
+  let dragEl = null;
   const dispatch = createEventDispatcher();
   function toggleTask() {
     open = !open;
@@ -17,6 +18,8 @@
 
   function start(e) {
     dragItem = e.detail.start;
+    dragEl = e.detail.el;
+    console.log(e.detail.el)
   }
 
   function enter(e) {
@@ -25,7 +28,7 @@
 
   $:tasks = $taskStore.tasks;
   
-  function end() {
+  function end(e) {
     let _tasks = [...tasks];
 
     let _parentTask = _tasks[id];
@@ -44,14 +47,14 @@
 </script>
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>
-    <span class="task-title">{task.title}</span>
+    <span class="task-title">{todo.title}</span>
   </button>
   <div class="progress">
-    <div class="progress-level" style="height: 100%; width: {task.progressLevel+'%'};"></div>
+    <div class="progress-level" style="height: 100%; width: {todo.progressLevel+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
-    <AddTask placeholder={task.title} parentId={task.id} />
-    {#each task.tasks as task, key}
+    <AddTask placeholder={todo.title} parentId={todo.id} />
+    {#each todo.tasks as task, key}
       <TaskCard
         {task}
         id={key}

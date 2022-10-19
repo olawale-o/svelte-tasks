@@ -10,10 +10,10 @@
 <li
   class="todo-list"
   bind:this={taskCard}
-  on:dragstart={() => dispatch('start', { start: id })}
+  on:dragstart={(e) => dispatch('start', { start: id, el: e.target })}
   on:dragenter={() => dispatch('enter', { enter: id })}
   on:dragover|preventDefault={() => false}
-  on:dragend={() => dispatch('end', { })}
+  on:dragend={(e) => dispatch('end', { }) }
   draggable={true}
 >
   <div class="field todo-list__task">
