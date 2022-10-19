@@ -17,9 +17,9 @@
     }
   }
   function addTask(e) {
-    const isAdded = newTask(e, task, { title: task, id: tasks.length + 1, progressLevel: 0, tasks: []}, taskStore.addParentTask);
-    if (isAdded) {
-      task = '';
+    if ((e.key === 'Enter' || e.type === 'click') && task?.trim()) {
+      const isAdded = newTask(e, task, { title: task, id: tasks.length + 1, progressLevel: 0, tasks: []}, taskStore.addParentTask);
+      if (isAdded) task = '';
     }
   }
 
@@ -37,7 +37,7 @@
           bind:value={task}
           on:keyup={addTask}
         >
-        <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask}></i></span>
+        <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask} on:keypress={addTask}></i></span>
       </div>
       {#each tasks as task, id}
         <TaskList
