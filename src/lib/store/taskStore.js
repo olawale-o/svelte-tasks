@@ -1,31 +1,6 @@
 import { writable } from 'svelte/store';
-import { addParenTaskToDB } from '@/lib/db/db';
 
 const localStoreTasks = JSON.parse(localStorage.getItem('tasks'));
-const tasks = [
-  {
-    id: 1,
-    title: "Language",
-    progress_level: 0,
-    tasks: [
-      {
-        id: 1,
-        description: "Javascript",
-        completed: false,
-      },
-      {
-        id: 2,
-        description: "PHP",
-        completed: false,
-      },
-      {
-        id: 3,
-        description: "Ruby",
-        completed: false,
-      },
-    ],
-  },
-];
 
 const initialState = {
   tasks: localStoreTasks?.tasks || [],
@@ -44,18 +19,16 @@ function createTaskStore(state = initialState) {
     addTask: (task) => update((state) => {
       const oldTasks = [...state.tasks];
 
-      const { description, id } = task;
-      const parentTaskIndex = state.tasks.findIndex((task) => task.id === id);
+      const { description, parent_id, completed, id } = task;
+      const parentTaskIndex = state.tasks.findIndex((task) => task.id === parent_id);
     
       const parentTask = oldTasks[parentTaskIndex];
-    
       const newTask = {
-        id: Math.floor(Math.random() * 100),
+        id,
         description,
-        completed: false,
-        parentId: id,
+        completed,
+        parent_id,
       };
-    
       parentTask.tasks.push(newTask);
       parentTask.progress_level = (parentTask.tasks.filter((task) => task.completed === true).length / parentTask.tasks.length) * 100;
       oldTasks[parentTaskIndex] = parentTask;

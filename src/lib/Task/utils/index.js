@@ -1,4 +1,4 @@
-import { addParenTaskToDB } from '@/lib/db/db';
+import { addParenTaskToDB, addChildTaskToDB } from '@/lib/db/db';
 /**
  * @param {{ key: string; type: string; }} e
  * @param {any} task
@@ -6,6 +6,19 @@ import { addParenTaskToDB } from '@/lib/db/db';
  */
 function newTask(e, task, cb) {
   addParenTaskToDB(task).then((data) => {
+    data.tasks = [];
+    cb(data);
+  });
+  return true;
+}
+
+/**
+ * @param {{ key: string; type: string; }} e
+ * @param {any} task
+ * @param {(arg0: any) => void} cb
+ */
+function newChildTask(e, task, cb) {
+  addChildTaskToDB(task).then((data) => {
     cb(data);
   });
   return true;
@@ -19,4 +32,4 @@ function capitalize(string) {
   return newString;
 }
 
-export { newTask, capitalize};
+export { newTask, capitalize, newChildTask };

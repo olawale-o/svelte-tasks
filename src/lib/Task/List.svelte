@@ -55,7 +55,7 @@
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
     <AddTask placeholder={capitalize(todo.title)} parentId={todo.id} />
-    {#if todo?.task}
+    {#if todo?.tasks}
       {#each todo.tasks as task, key}
         <TaskCard
           {task}

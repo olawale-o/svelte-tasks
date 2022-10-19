@@ -16,4 +16,15 @@ async function addParenTaskToDB(task) {
   return data[0];
 }
 
-export { addParenTaskToDB }
+async function addChildTaskToDB(task) {
+  const { data, error } = await supabase
+  .from('todos')
+  .insert([task])
+  .select();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data[0];
+}
+
+export { addParenTaskToDB, addChildTaskToDB }

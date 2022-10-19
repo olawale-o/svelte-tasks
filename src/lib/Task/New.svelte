@@ -1,12 +1,12 @@
 <script>
   import { taskStore } from '../store/taskStore';
-  import { newTask } from './utils';
+  import { newChildTask } from './utils';
   let text;
   export let placeholder;
   export let parentId;
   function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
-      newTask(e, { description: text, id: parentId }, taskStore.addTask);
+      newChildTask(e, { description: text, parent_id: parentId, completed: false, }, taskStore.addTask);
       text = '';
     }
   }
