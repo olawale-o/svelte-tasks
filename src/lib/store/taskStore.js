@@ -3,7 +3,30 @@ const localStoreTasks = JSON.parse(localStorage.getItem('tasks'));
 
 
 const initialState = {
-  tasks: localStoreTasks.tasks || [],
+  tasks: localStoreTasks?.tasks || [
+    {
+      id: 1,
+      title: "Language",
+      progressLevel: 0,
+      tasks: [
+        {
+          id: 1,
+          description: "Javascript",
+          completed: false,
+        },
+        {
+          id: 2,
+          description: "PHP",
+          completed: false,
+        },
+        {
+          id: 3,
+          description: "Ruby",
+          completed: false,
+        },
+      ],
+    },
+  ],
 };
 
 function createTaskStore(state = initialState) {
@@ -49,6 +72,7 @@ function createTaskStore(state = initialState) {
     }),
     updateTasks: (tasks) => update((state) => {
       state.tasks = tasks;
+      subscribe((state) => localStorage.setItem('tasks', JSON.stringify(state)))
       return state;
     }),
   }
