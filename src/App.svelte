@@ -1,11 +1,11 @@
 <script>
+  import { onMount } from 'svelte';
   import { taskStore } from '@/lib/store/taskStore';
   import { newTask } from '@/lib/Task/utils';
   import TaskList from '@/lib/Task/List.svelte';
   let currentActiveIndex = 0;
   $: {  }
   let task = '';
-
   /**
 * @param {{ detail: { id: number; }; }} e
 */
@@ -18,12 +18,6 @@
   }
   async function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && task?.trim()) {
-      // newTask(e, {
-      //   title: capitalize(task),
-      //   id: tasks.length + 1,
-      //   progressLevel: 0,
-      //   tasks: []
-      // }, taskStore.addParentTask);
       await newTask(e, {
         title: task,
         progress_level: 0,
@@ -31,6 +25,10 @@
       task = '';
     }
   }
+
+  onMount(() => {
+    taskStore.getAllTasks()
+  })
 
   $: tasks = $taskStore;
 </script>
@@ -48,9 +46,9 @@
         >
         <span id="add"><i class='bx bx-subdirectory-left return' on:click={addTask} on:keypress={addTask}></i></span>
       </div>
-      {#if tasks?.tasks}
-        {@const toods = tasks.tasks}
-        {#each toods as task, id}
+      {#if tasks}
+        <!-- {@const toods = tasks.tasks} -->
+        {#each tasks as task, id}
           <TaskList
             todo={task}
             active={currentActiveIndex === id}

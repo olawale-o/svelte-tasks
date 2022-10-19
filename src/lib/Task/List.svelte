@@ -27,7 +27,8 @@
     dragEnterItem = e.detail.enter;
   }
 
-  $:tasks = $taskStore.tasks;
+  // $:tasks = $taskStore.tasks;
+  $:tasks = $taskStore;
   
   function end(e) {
     let _tasks = [...tasks];
@@ -55,8 +56,8 @@
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
     <AddTask placeholder={capitalize(todo.title)} parentId={todo.id} />
-    {#if todo?.tasks}
-      {#each todo.tasks as task, key}
+    {#if todo?.todos}
+      {#each todo.todos as task, key}
         <TaskCard
           {task}
           id={key}
