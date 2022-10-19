@@ -38,7 +38,6 @@ function createTaskStore(state = initialState) {
     subscribe,
     addParentTask: (task) => update((state) => {
       state.tasks.push(task);
-      addParenTaskToDB(task);
       subscribe((state) => localStorage.setItem('tasks', JSON.stringify(state)));
       return state;
     }),

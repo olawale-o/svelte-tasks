@@ -1,12 +1,12 @@
 <script>
   import { taskStore } from '../store/taskStore';
-  import { newTask, capitalize } from './utils';
+  import { newTask } from './utils';
   let text;
   export let placeholder;
   export let parentId;
   function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
-      newTask(e, { description: capitalize(text), id: parentId }, taskStore.addTask);
+      newTask(e, { description: text, id: parentId }, taskStore.addTask);
       text = '';
     }
   }

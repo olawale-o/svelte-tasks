@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { taskStore } from '../store/taskStore';
+  import { capitalize } from './utils';
   const dispatch = createEventDispatcher();
   export let task;
   export let id;
@@ -29,7 +30,7 @@
       class="todo-list__text"
       class:strike={task.completed}
     >
-      {task.description}
+      {capitalize(task.description)}
     </span>
     <i class="bx bx-trash-alt bin hide"></i>
     <i class="bx bx-dots-vertical-rounded move"></i>

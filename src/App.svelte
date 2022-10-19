@@ -1,6 +1,6 @@
 <script>
   import { taskStore } from '@/lib/store/taskStore';
-  import { newTask, capitalize } from '@/lib/Task/utils';
+  import { newTask } from '@/lib/Task/utils';
   import TaskList from '@/lib/Task/List.svelte';
   let currentActiveIndex = 0;
   $: {  }
@@ -25,7 +25,7 @@
       //   tasks: []
       // }, taskStore.addParentTask);
       await newTask(e, {
-        title: capitalize(task),
+        title: task,
         progress_level: 0,
       }, taskStore.addParentTask);
       task = '';

@@ -3,6 +3,7 @@
   import { taskStore } from '../store/taskStore';
   import AddTask from './New.svelte';
   import TaskCard from './index.svelte';
+  import { capitalize } from './utils';
   export let todo;
   export let id;
   export let active;
@@ -47,13 +48,13 @@
 </script>
 <div class="task-container">
   <button class="task-heading" on:click={toggleTask}>
-    <span class="task-title">{todo.title}</span>
+    <span class="task-title">{capitalize(todo.title)}</span>
   </button>
   <div class="progress">
     <div class="progress-level" style="height: 100%; width: {todo.progress_level+'%'};"></div>
   </div>
   <ul class="todo-tasks" id="todo-tasks" class:open={active}>
-    <AddTask placeholder={todo.title} parentId={todo.id} />
+    <AddTask placeholder={capitalize(todo.title)} parentId={todo.id} />
     {#if todo?.task}
       {#each todo.tasks as task, key}
         <TaskCard

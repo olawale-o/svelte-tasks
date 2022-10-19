@@ -1,4 +1,3 @@
-// import.meta.env.VITE_SUPABASE_CONNECTION_STRING
 import { AuthApiError, createClient } from '@supabase/supabase-js';
 let supabase = null;
 
@@ -7,13 +6,14 @@ if (!supabase) {
 }
 
 async function addParenTaskToDB(task) {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('todo_categories')
-    .insert([task]);
+    .insert([task])
+    .select();
   if (error) {
     throw new Error(error.message);
   }
-  return true;
+  return data[0];
 }
 
 export { addParenTaskToDB }
