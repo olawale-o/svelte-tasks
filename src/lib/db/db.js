@@ -27,4 +27,15 @@ async function addChildTaskToDB(task) {
   return data[0];
 }
 
-export { addParenTaskToDB, addChildTaskToDB }
+async function getTasks() {
+  const { data, error } =  await supabase
+  .from('todo_categories')
+  .select(`*, todos(*)`)
+
+  if (error) {
+    throw new Error(error);
+  }
+  return data;
+}
+
+export { addParenTaskToDB, addChildTaskToDB, getTasks }
