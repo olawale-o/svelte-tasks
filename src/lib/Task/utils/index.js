@@ -1,9 +1,19 @@
-function newTask(e, field, task, cb) {
-  if ((e.key === 'Enter' || e.type === 'click') && field?.trim()) {
-    cb(task);
-    return true
-  }
-  return false;
+/**
+ * @param {{ key: string; type: string; }} e
+ * @param {any} task
+ * @param {(arg0: any) => void} cb
+ */
+function newTask(e, task, cb) {
+  cb(task);
+  return true;
 }
 
-export { newTask };
+/**
+ * @param {string} string
+ */
+function capitalize(string) {
+  const newString = string[0].toUpperCase()+string.substring(1,);
+  return newString;
+}
+
+export { newTask, capitalize};

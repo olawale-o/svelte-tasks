@@ -1,6 +1,6 @@
 <script>
   import { taskStore } from '@/lib/store/taskStore';
-  import { newTask } from '@/lib/Task/utils';
+  import { newTask, capitalize } from '@/lib/Task/utils';
   import TaskList from '@/lib/Task/List.svelte';
   let currentActiveIndex = 0;
   $: {  }
@@ -18,8 +18,8 @@
   }
   function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && task?.trim()) {
-      const isAdded = newTask(e, task, { title: task, id: tasks.length + 1, progressLevel: 0, tasks: []}, taskStore.addParentTask);
-      if (isAdded) task = '';
+      newTask(e, { title: capitalize(task), id: tasks.length + 1, progressLevel: 0, tasks: []}, taskStore.addParentTask);
+      task = '';
     }
   }
 
