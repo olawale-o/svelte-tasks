@@ -19,6 +19,7 @@ function newTask(e, task, cb) {
  */
 function newChildTask(e, task, cb) {
   addChildTaskToDB(task).then((data) => {
+    console.log(data);
     cb(data);
   });
   return true;
