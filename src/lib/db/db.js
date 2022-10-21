@@ -38,4 +38,14 @@ async function getTasks() {
   return data;
 }
 
-export { addParenTaskToDB, addChildTaskToDB, getTasks }
+async function getMaxPosition() {
+  const { data, error } =  await supabase.rpc('max_position');
+
+  if (error) {
+    throw new Error(error);
+  }
+  console.log(data);
+  return data;
+}
+
+export { addParenTaskToDB, addChildTaskToDB, getTasks, getMaxPosition }
