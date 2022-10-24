@@ -3,6 +3,7 @@
   import { taskStore } from '@/lib/store/taskStore';
   import { newTask } from '@/lib/Task/utils';
   import TaskList from '@/lib/Task/List.svelte';
+
   let currentActiveIndex = 0;
   $: {  }
   let task = '';

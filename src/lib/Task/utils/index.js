@@ -18,11 +18,12 @@ function newTask(e, task, cb) {
  * @param {(arg0: any) => void} cb
  */
 function newChildTask(e, task, cb) {
-  addChildTaskToDB(task).then((data) => {
-    console.log(data);
+  return addChildTaskToDB(task).then((data) => {
     cb(data);
+    return true;
+  }).catch((err) => {
+    return false;
   });
-  return true;
 }
 
 /**

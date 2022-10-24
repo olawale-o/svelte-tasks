@@ -44,7 +44,6 @@ async function getMaxPosition() {
   if (error) {
     throw new Error(error);
   }
-  console.log(data);
   return data;
 }
 
