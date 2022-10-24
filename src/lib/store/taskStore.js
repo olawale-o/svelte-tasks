@@ -29,7 +29,7 @@ function createTaskStore(state = []) {
     addTask: (task) => update((state) => {
       const oldTasks = [...state];
 
-      const { description, parent_id, completed, id } = task;
+      const { description, parent_id, completed, id, position } = task;
       const parentTaskIndex = state.findIndex((task) => task.id === parent_id);
     
       const parentTask = oldTasks[parentTaskIndex];
@@ -38,6 +38,7 @@ function createTaskStore(state = []) {
         description,
         completed,
         parent_id,
+        position,
       };
       parentTask.todos.push(newTask);
       parentTask.progress_level = (parentTask.todos.filter((task) => task.completed === true).length / parentTask.todos.length) * 100;
