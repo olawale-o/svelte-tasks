@@ -1,15 +1,21 @@
 <script>
+  import { onMount } from 'svelte';
   import { taskStore } from '../store/taskStore';
+  import { positionStore } from '@/lib/store/positionStore';
   import { newChildTask } from './utils';
   let text;
   export let placeholder;
   export let parentId;
   function addTask(e) {
     if ((e.key === 'Enter' || e.type === 'click') && text?.trim()) {
-      newChildTask(e, { description: text, parent_id: parentId, completed: false, }, taskStore.addTask);
+      if (newChildTask(e, { description: text, parent_id: parentId, completed: false, position }, taskStore.addTask)) {
+        positionStore.updatePosition()
+      }
       text = '';
     }
   }
+  onMount(() => positionStore.init());
+  $: position = $positionStore
 </script>
 <div class="input-field">
   <input
